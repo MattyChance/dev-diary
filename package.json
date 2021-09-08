@@ -1,0 +1,21 @@
+{
+  "name": "dev-diary",
+  "version": "1.0.0",
+  "description": "Learning diary for developer",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "keywords": [
+    "journey",
+    "diary",
+    "developer",
+    "life-long",
+    "learning"
+  ],
+  "author": "matty wang and marija spaic",
+  "license": "ISC",
+  "dependencies": {
+    "gql": "^1.1.2"
+  }
+}
