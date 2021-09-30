@@ -1,6 +1,6 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
-import { buildSchema, parse } from 'graphql';
+import { buildSchema } from 'graphql';
 import fetch from 'node-fetch';
 
 // Construct a schema, using GraphQL schema language
