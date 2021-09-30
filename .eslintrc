@@ -10,5 +10,7 @@
       "plugin:@typescript-eslint/recommended",
       "fbjs/strict"
     ],
-    "rules": {}
+    "rules": {
+      "quotes": ["warn", "single"]
+    }
   }

@@ -34,13 +34,13 @@ const schema = buildSchema(`
 
 const esHost = 'http://localhost:9200/';
 
-const getOnePost = async id => fetch(esHost + 'post/_doc/' + id);
-const getOneUser = async id => fetch(esHost + 'user/_doc/' + id);
-const getPostsByUserId = async userId => {
+const getOnePost = async (id: number) => fetch(esHost + 'post/_doc/' + id);
+const getOneUser = async (id: number) => fetch(esHost + 'user/_doc/' + id);
+const getPostsByUserId = async (userId: number) => {
     const query = {
         "query": {
             "term": {
-              "user.id": userId
+                "user.id": userId
             }
         }
     };
@@ -57,16 +57,16 @@ const getPostsByUserId = async userId => {
 }
 // The root provides a resolver function for each API endpoint
 const root = {
-    post: async id => {
+    post: async (id: number) => {
         const post = await getOnePost(id.id); // todo: id.id? gql params returns an object.
         const result = await post.json();
 
         return result?._source;
     },
-    posts: async ids => {
+    posts: async (ids: number[]) => {
         const posts = [];
 
-        await Promise.all(ids.ids.map(async id  => {
+        await Promise.all(ids.ids.map(async (id: number)  => {
             const post = await getOnePost(id);
             const result = await post.json();
     
@@ -75,7 +75,7 @@ const root = {
 
         return posts;
     },
-    user: async id => {
+    user: async (id: number) => {
         const user = await getOneUser(id.id);
         const result = await user.json();
 
@@ -84,7 +84,7 @@ const root = {
     users: async userIds => {
         const users = [];
 
-        await Promise.all(userIds.userIds.map(async id  => {
+        await Promise.all(userIds.userIds.map(async (id: number) => {
             const user = await getOneUser(id);
             const result = await user.json();
     
@@ -94,8 +94,8 @@ const root = {
         return users;
     },
     postsByUser: async userId => {
-        const postsByUserId = await getPostsByUserId(userId.userId);
-        const result = await postsByUserId.json();
+        const postsByUserId = await getPostsByUserId(userId.userId),
+            result = await postsByUserId.json();
 
         return result?.hits?.hits.map(hit => hit?._source);
     }
@@ -103,9 +103,9 @@ const root = {
 
 const app = express();
 app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
+    schema: schema,
+    rootValue: root,
+    graphiql: true
 }));
 app.listen(4000);
 console.log('Running a GraphQL API server at http://localhost:4000/graphql');
