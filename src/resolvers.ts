@@ -1,12 +1,15 @@
+import { GetResponse } from 'elasticsearch';
 import { esRequests } from './esRequests';
+import { Post } from './InternalTypes';
 
 // The root provides a resolver function for each API endpoint
 export const root = {
-    post: async (id: any): Promise<any> => {
+    post: async (id: { id: number }): Promise<Post> => {
         // todo: id.id? gql params returns an object.
         const post = await esRequests.getOnePost(id.id);
-
-        return (await post.json())?._source;
+        // eslint-disable-next-line one-var
+        const result = await post.json() as GetResponse<Post>;
+        return result._source;
     }
     // posts: async (ids: number[]) => {
     //     const posts = [];
