@@ -1,4 +1,3 @@
-
 import { buildSchema } from 'graphql';
 
 // Construct a schema, using GraphQL schema language
