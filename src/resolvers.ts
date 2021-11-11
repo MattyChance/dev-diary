@@ -1,50 +1,42 @@
 import { esRequests } from './esRequests';
-import { Post } from './InternalTypes';
+import { Post, User } from './InternalTypes';
 
 // The root provides a resolver function for each API endpoint
 export const root = {
     post: async (id: { id: number }): Promise<Post> => {
         // todo: id.id? gql params returns an object.
         const post = await esRequests.getOnePost(id.id);
-        // eslint-disable-next-line no-console
-        console.log('???????? ', post);
         // eslint-disable-next-line one-var
         return post.data._source;
+    },
+    posts: async (ids: { ids: number[] }): Promise<Post[]> => {
+        const posts: Post[] = [];
+
+        await Promise.all(ids.ids.map(async (id: number)  => {
+            const post = await esRequests.getOnePost(id);
+    
+            posts.push(post?.data?._source);
+        }));
+
+        return posts;
+    },
+    user: async (id: { id: number }): Promise<User> => {
+        return (await esRequests.getOneUser(id.id)).data?._source;
+    },
+    users: async (userIds: { userIds: number[] }): Promise<User[]> => {
+        const users: User[] = [];
+
+        await Promise.all(userIds.userIds.map(async (id: number) => {
+            const user = await esRequests.getOneUser(id);
+    
+            users.push(user?.data?._source);
+        }));
+
+        return users;
+    },
+    postsByUser: async (userId: { userId: number }): Promise<Post[]> => {
+        const postsByUserId = await esRequests.getPostsByUserId(userId.userId);
+
+        return postsByUserId?.data?.hits?.hits.map((hit: any) => hit?._source);
     }
-    // posts: async (ids: number[]) => {
-    //     const posts = [];
-
-    //     await Promise.all(ids.ids.map(async (id: number)  => {
-    //         const post = await getOnePost(id);
-    //         const result = await post.json();
-    
-    //         posts.push(result?._source);
-    //     }));
-
-    //     return posts;
-    // },
-    // user: async (id: number) => {
-    //     const user = await getOneUser(id.id);
-    //     const result = await user.json();
-
-    //     return result?._source;
-    // },
-    // users: async userIds => {
-    //     const users = [];
-
-    //     await Promise.all(userIds.userIds.map(async (id: number) => {
-    //         const user = await getOneUser(id);
-    //         const result = await user.json();
-    
-    //         users.push(result?._source);
-    //     }));
-
-    //     return users;
-    // },
-    // postsByUser: async userId => {
-    //     const postsByUserId = await getPostsByUserId(userId.userId),
-    //         result = await postsByUserId.json();
-
-    //     return result?.hits?.hits.map(hit => hit?._source);
-    // }
 };
