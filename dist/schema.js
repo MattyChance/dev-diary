@@ -1,7 +1,9 @@
-import { buildSchema } from 'graphql';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.schema = void 0;
+const graphql_1 = require("graphql");
 // Construct a schema, using GraphQL schema language
-export const schema = buildSchema(`
+exports.schema = (0, graphql_1.buildSchema)(`
     type Query {
         post (id: ID!): Post
         posts (ids: [ID!]!): [Post!]!
@@ -27,3 +29,4 @@ export const schema = buildSchema(`
         lastName: String!
     }
 `);
+//# sourceMappingURL=schema.js.map

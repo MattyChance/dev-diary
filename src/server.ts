@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import { root } from './resolvers';
 import { schema } from './schema';

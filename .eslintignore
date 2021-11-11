@@ -1,4 +1,4 @@
-./build
+dist/*
 package.json
 package-lock.json
 node_moduels

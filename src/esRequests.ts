@@ -1,15 +1,15 @@
-import fetch, { Response } from 'node-fetch';
+import axios from 'axios';
 
 export const esRequests = {
     esHost: 'http://localhost:9200/',
-    getOnePost: async (id: number): Promise<Response> => {
-        return fetch(esRequests.esHost + 'post/_doc/' + id);
+    getOnePost: async (id: number): Promise<any> => {
+        return axios.get(esRequests.esHost + 'post/_doc/' + id);
     },
-    getOneUser: async (id: number): Promise<Response> => {
-        return fetch(esRequests.esHost + 'user/_doc/' + id);
+    getOneUser: async (id: number): Promise<any> => {
+        return axios.get(esRequests.esHost + 'user/_doc/' + id);
     },
     // eslint-disable-next-line max-len
-    getPostsByUserId: async (userId: number): Promise<Response> => {    
+    getPostsByUserId: async (userId: number): Promise<any> => {    
         const req = {
             method: 'post',
             body: JSON.stringify({
@@ -22,6 +22,6 @@ export const esRequests = {
             headers: {'Content-Type': 'application/json'}
         };
     
-        return fetch(esRequests.esHost + 'post/_search/', req);
+        return axios.post(esRequests.esHost + 'post/_search/', req);
     }
 };

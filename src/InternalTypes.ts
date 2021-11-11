@@ -4,7 +4,7 @@ export interface Post {
     title: string,
     createDate: string,
     updateDate: string,
-    note: string,
+    notes: string,
     code: string,
     deleted: boolean,
     tag: string[],
