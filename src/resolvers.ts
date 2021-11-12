@@ -21,7 +21,18 @@ export const root = {
         return posts;
     },
     user: async (id: { id: number }): Promise<User> => {
-        return (await esRequests.getOneUser(id.id)).data?._source;
+        const user = (await esRequests.getOneUser(id.id)).data?._source;
+
+        return {
+            ...user,
+            posts: async (): Promise<Post[]> => {
+                const postsByUserId =
+                    await esRequests.getPostsByUserId(user.id);
+
+                return postsByUserId?.data?.hits?.hits.map(
+                    (hit: any) => hit?._source
+                );
+            }};
     },
     users: async (userIds: { userIds: number[] }): Promise<User[]> => {
         const users: User[] = [];
@@ -33,10 +44,5 @@ export const root = {
         }));
 
         return users;
-    },
-    postsByUser: async (userId: { userId: number }): Promise<Post[]> => {
-        const postsByUserId = await esRequests.getPostsByUserId(userId.userId);
-
-        return postsByUserId?.data?.hits?.hits.map((hit: any) => hit?._source);
     }
 };

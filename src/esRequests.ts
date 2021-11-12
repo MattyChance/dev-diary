@@ -10,17 +10,17 @@ export const esRequests = {
     },
     // eslint-disable-next-line max-len
     getPostsByUserId: async (userId: number): Promise<any> => {    
-        const req = {
-            method: 'post',
-            body: JSON.stringify({
-                'query': {
-                    'term': {
-                        'user.id': userId
-                    }
+        const query = {
+            'query': {
+                'term': {
+                    'user.id': userId
                 }
-            }),
-            headers: {'Content-Type': 'application/json'}
+            }
         };
-        return axios.post(esRequests.esHost + 'post/_search/', req);
+            
+        return axios.get(
+            esRequests.esHost + 'post/_search/',
+            {data: query, headers: {'Content-Type': 'application/json'}}
+        );
     }
 };

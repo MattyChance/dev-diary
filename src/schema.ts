@@ -25,5 +25,6 @@ export const schema = buildSchema(`
         alias: String!
         firstName: String!
         lastName: String!
+        posts: [Post!]!
     }
 `);
