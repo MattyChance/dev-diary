@@ -21,7 +21,6 @@ export const esRequests = {
             }),
             headers: {'Content-Type': 'application/json'}
         };
-    
         return axios.post(esRequests.esHost + 'post/_search/', req);
     }
 };
