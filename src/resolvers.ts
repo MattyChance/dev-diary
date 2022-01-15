@@ -5,9 +5,7 @@ import { Post, User } from './InternalTypes';
 export const root = {
     post: async (id: { id: number }): Promise<Post> => {
         // todo: id.id? gql params returns an object.
-        const post = await esRequests.getOnePost(id.id);
-        // eslint-disable-next-line one-var
-        return post.data._source;
+        return (await esRequests.getOnePost(id.id)).data?._source;
     },
     posts: async (ids: { ids: number[] }): Promise<Post[]> => {
         const posts: Post[] = [];
@@ -20,7 +18,7 @@ export const root = {
 
         return posts;
     },
-    user: async (id: { id: number }): Promise<User> => {
+    user: async (id: { id: string }): Promise<User> => {
         const user = (await esRequests.getOneUser(id.id)).data?._source;
 
         return {
@@ -34,15 +32,56 @@ export const root = {
                 );
             }};
     },
-    users: async (userIds: { userIds: number[] }): Promise<User[]> => {
+    users: async (userIds: { userIds: string[] }): Promise<User[]> => {
         const users: User[] = [];
 
-        await Promise.all(userIds.userIds.map(async (id: number) => {
+        await Promise.all(userIds.userIds.map(async (id: string) => {
             const user = await esRequests.getOneUser(id);
     
             users.push(user?.data?._source);
         }));
 
         return users;
+    },
+    createNewPost: (
+
+    ): void => {
+        return;
+    },
+    createNewUser: async (
+        args: {
+            id: string,
+            alias: string,
+            firstName: string,
+            lastName: string
+        }): Promise<any> => {
+
+        try {
+            await esRequests.createUser(
+                args.id,
+                args.alias,
+                args.firstName,
+                args.lastName
+            );
+
+            // eslint-disable-next-line one-var
+            const resp = await esRequests.getOneUser(args.id);
+
+            return resp?.data?._source;
+
+        } catch (e: unknown) {
+            throw e;
+            console.log('errr', e.response.data);
+        }
+
+        // uuid generator to create our own IDs
+
+        // TODO: mapping generator
+
+        // TODO: error handling
+
+
+        // eslint-disable-next-line no-console
+        // console.log('??????? ', createUserResp);
     }
 };
