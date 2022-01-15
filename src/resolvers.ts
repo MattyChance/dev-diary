@@ -1,5 +1,7 @@
 import { esRequests } from './esRequests';
 import { Post, User } from './InternalTypes';
+import { errHandler } from './errorHandler';
+import { v4 as uuidV4 } from 'uuid';
 
 // The root provides a resolver function for each API endpoint
 export const root = {
@@ -50,38 +52,29 @@ export const root = {
     },
     createNewUser: async (
         args: {
-            id: string,
             alias: string,
             firstName: string,
             lastName: string
-        }): Promise<any> => {
+        }): Promise<User> => {
+
+        const uuid = uuidV4();
 
         try {
             await esRequests.createUser(
-                args.id,
+                uuid,
                 args.alias,
                 args.firstName,
                 args.lastName
             );
 
             // eslint-disable-next-line one-var
-            const resp = await esRequests.getOneUser(args.id);
+            const resp = await esRequests.getOneUser(uuid);
 
             return resp?.data?._source;
 
         } catch (e: unknown) {
+            errHandler.reportError(e);
             throw e;
-            console.log('errr', e.response.data);
         }
-
-        // uuid generator to create our own IDs
-
-        // TODO: mapping generator
-
-        // TODO: error handling
-
-
-        // eslint-disable-next-line no-console
-        // console.log('??????? ', createUserResp);
     }
 };

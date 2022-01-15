@@ -29,7 +29,6 @@ export const schema = buildSchema(`
     }
     type Mutation {
         createNewUser(
-            id: ID!,
             alias: String!,
             firstName: String!,
             lastName: String!,

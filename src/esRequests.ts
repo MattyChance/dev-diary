@@ -49,7 +49,6 @@ export const esRequests = {
             lastName
         };
 
-        console.log('data???', data);
         return axios({
             method: 'post',
             url: `${esRequests.esHost}/user/_doc/${id}`,
