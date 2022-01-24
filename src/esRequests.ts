@@ -3,7 +3,7 @@ import axios from 'axios';
 // should i change these  this always returns an internal type
 export const esRequests = {
     esHost: 'http://localhost:9200',
-    getOnePost: async (id: number): Promise<any> => {
+    getOnePost: async (id: string): Promise<any> => {
         return axios.get(esRequests.esHost + '/post/_doc/' + id);
     },
     getOneUser: async (id: string): Promise<any> => {
@@ -52,6 +52,34 @@ export const esRequests = {
         return axios({
             method: 'post',
             url: `${esRequests.esHost}/user/_doc/${id}`,
+            data
+        });
+    },
+    createPost: async (
+        userId: string,
+        postId: string,
+        title: string,
+        createDate: string,
+        updateDate: string,
+        notes: string,
+        code: string,
+        tag: string
+    ): Promise<any> => {
+        const user = (await esRequests.getOneUser(userId))?.data?._source,
+            data = {
+                id: postId,
+                title,
+                createDate,
+                updateDate,
+                notes,
+                code,
+                tag,
+                user
+            };
+        
+        return axios({
+            method: 'post',
+            url: `${esRequests.esHost}/post/_doc/${postId}`,
             data
         });
     }

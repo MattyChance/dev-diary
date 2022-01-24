@@ -2,17 +2,18 @@ import { esRequests } from './esRequests';
 import { Post, User } from './InternalTypes';
 import { errHandler } from './errorHandler';
 import { v4 as uuidV4 } from 'uuid';
+import moment from 'moment';
 
 // The root provides a resolver function for each API endpoint
 export const root = {
-    post: async (id: { id: number }): Promise<Post> => {
+    post: async (id: { id: string }): Promise<Post> => {
         // todo: id.id? gql params returns an object.
         return (await esRequests.getOnePost(id.id)).data?._source;
     },
-    posts: async (ids: { ids: number[] }): Promise<Post[]> => {
+    posts: async (ids: { ids: string[] }): Promise<Post[]> => {
         const posts: Post[] = [];
 
-        await Promise.all(ids.ids.map(async (id: number)  => {
+        await Promise.all(ids.ids.map(async (id: string)  => {
             const post = await esRequests.getOnePost(id);
     
             posts.push(post?.data?._source);
@@ -45,10 +46,37 @@ export const root = {
 
         return users;
     },
-    createNewPost: (
+    // modifyPost: (): void => {},
+    createNewPost: async (
+        args: {
+            userId: string,
+            title: string,
+            notes: string,
+            code: string,
+            tag: string
+        }
+    ): Promise<void> => {
+        const postId = uuidV4(),
+            createDate = moment().format(),
+            updateDate = moment().format();
+        
+        try {
+            await esRequests.createPost(
+                args.userId,
+                postId,
+                args.title,
+                createDate,
+                updateDate,
+                args.notes,
+                args.code,
+                args.tag
+            );
 
-    ): void => {
-        return;
+            const getOnePostResp = await esRequests.getOnePost(postId);
+            return getOnePostResp?.data?._source;
+        } catch (e) {
+            errHandler.reportError(e);
+        }
     },
     createNewUser: async (
         args: {
@@ -77,4 +105,6 @@ export const root = {
             throw e;
         }
     }
+    // deleteUser: () => {},
+    // deletePost: () => {},
 };

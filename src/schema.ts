@@ -33,5 +33,12 @@ export const schema = buildSchema(`
             firstName: String!,
             lastName: String!,
         ): User
+        createNewPost(
+            userId: ID!
+            title: String!
+            notes: String!
+            code: String!
+            tag: String
+        ): Post
     }
 `);
