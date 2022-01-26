@@ -40,5 +40,12 @@ export const schema = buildSchema(`
             code: String!
             tag: String
         ): Post
+        modifyPost(
+            postId: ID!,
+            title: String,
+            notes: String,
+            code: String,
+            tag: String,
+        ): Post
     }
 `);

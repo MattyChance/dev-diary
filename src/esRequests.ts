@@ -82,5 +82,47 @@ export const esRequests = {
             url: `${esRequests.esHost}/post/_doc/${postId}`,
             data
         });
+    },
+    modifyPost: async (
+        postId: string,
+        title: string,
+        notes: string,
+        code: string,
+        tag: string,
+        updateDate: string
+    ): Promise<any> => {
+        let data: any;
+
+        if (title || notes || code || tag) {
+            data = {
+                updateDate
+            };
+        } else {
+            throw new Error('No update has been made to this post');
+        }
+
+        if (title) {
+            data.title = title;
+        } 
+
+        if (notes) {
+            data.notes = notes;
+        }
+
+        if (code) {
+            data.notes = code;
+        }
+
+        if (notes) {
+            data.tag = tag;
+        }
+
+        return axios({
+            method: 'post',
+            url: `${esRequests.esHost}/post/_update/${postId}`,
+            data: {
+                'doc': data
+            }
+        });
     }
 };
