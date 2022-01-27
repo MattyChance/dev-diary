@@ -3,7 +3,6 @@ import { Post, User } from './InternalTypes';
 import { errHandler } from './errorHandler';
 import { v4 as uuidV4 } from 'uuid';
 import moment from 'moment';
-import { title } from 'process';
 
 // The root provides a resolver function for each API endpoint
 export const root = {
