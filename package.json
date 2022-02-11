@@ -19,8 +19,10 @@
   "author": "matty wang and marija spaic",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.12",
     "@types/elasticsearch": "^5.0.38",
     "axios": "^0.24.0",
+    "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
