@@ -6,15 +6,21 @@ import { schema } from './schema';
 
 const app = express();
 
-app
-    .use(cors())
-    .use('/graphql', graphqlHTTP({
-        schema: schema,
-        rootValue: root,
-        graphiql: true
-    }));
+try {
+    app
+        .use(cors())
+        .use('/graphql', graphqlHTTP({
+            schema: schema,
+            rootValue: root,
+            graphiql: true
+        }));
 
 
-app.listen(4000);
-// eslint-disable-next-line no-console
-console.log('Running a GraphQL API server at http://localhost:4000/graphql');
+    app.listen(4000);
+
+    // eslint-disable-next-line no-console
+    console.log('Running a GraphQL API server');
+} catch (e) {
+    // eslint-disable-next-line no-console
+    console.log('Starting server has failed ', e);
+}
