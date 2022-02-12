@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["node", "express", "cors", "uuid"],
     "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -17,6 +18,8 @@
     },
     "lib": [
       "es2017",
+      "es2018",
+      "dom",
     ]
   },
   "include": ["./src/**/*"]
