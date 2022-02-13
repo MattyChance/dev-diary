@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "types": ["node", "express", "cors", "uuid"],
     "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
