@@ -7,7 +7,7 @@
     "test": "npm run test",
     "lint": "eslint . --ext .ts",
     "compile": "tsc && node dist/server.js",
-    "start": "npm install @types/node --save && npm install @types/express --save && npm install @types/uuid && npm run compile",
+    "start": "npm install && npm run compile",
     "dev": "./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run compile\""
   },
   "keywords": [
