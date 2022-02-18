@@ -16,7 +16,7 @@ try {
         }));
 
 
-    app.listen(4000);
+    app.listen(process.env.PORT || 4000);
 
     // eslint-disable-next-line no-console
     console.log('Running a GraphQL API server');
