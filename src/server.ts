@@ -15,6 +15,8 @@ try {
             graphiql: true
         }));
 
+    // eslint-disable-next-line no-console
+    console.log('process env port:', process.env.PORT);
 
     app.listen(process.env.PORT || 4000);
 
