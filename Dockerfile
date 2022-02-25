@@ -1,3 +1,3 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+FROM elasticsearch:7.17.0
 
-EXPOSE 9200
+CMD docker run 
