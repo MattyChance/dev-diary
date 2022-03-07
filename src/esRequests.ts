@@ -1,8 +1,9 @@
 import axios from 'axios';
+import 'dotenv/config';
 
 // should i change these  this always returns an internal type
 export const esRequests = {
-    esHost: 'http://localhost:9200',
+    esHost: process.env.ES_CLUSTER,
     getOnePost: async (id: string): Promise<any> => {
         return axios.get(esRequests.esHost + '/post/_doc/' + id);
     },
