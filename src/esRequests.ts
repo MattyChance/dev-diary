@@ -1,11 +1,6 @@
 import axios from 'axios';
 import 'dotenv/config';
 
-console.log('node env', process.env.NODE_ENV);
-// eslint-disable-next-line max-len
-console.log('esHost', process.env.NODE_ENV === 'local' ? 'http://localhost:9200' : process.env.ES_CLUSTER);
-
-
 // should i change these  this always returns an internal types
 export const esRequests = {
     // eslint-disable-next-line max-len
