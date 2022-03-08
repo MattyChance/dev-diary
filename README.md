@@ -4,7 +4,7 @@ The backend of the dev learning diary app.
 
 # Local Development
 
-Run elasticsearch for the app:
+Run elasticsearch and kibana locally for the app:
 
 ```
 docker-compose up

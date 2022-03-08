@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .ts",
     "compile": "tsc && node dist/server.js",
     "start": "npm install && npm run compile",
-    "dev": "./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run compile\""
+    "dev": "NODE_ENV=local ./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run compile\""
   },
   "keywords": [
     "journey",
