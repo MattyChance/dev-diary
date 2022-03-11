@@ -22,9 +22,9 @@ try {
     console.log('process env NODE:', process.env.NODE_ENV);
 
     // eslint-disable-next-line max-len
-    const esHost = process.env.NODE_ENV === 'local' ? 'http://localhost:9200' : process.env.ES_CLUSTER;
-    // eslint-disable-next-line no-console
-    console.log('esCluster URL', esHost);
+    // const esHost = process.env.NODE_ENV === 'local' ? 'http://localhost:9200' : process.env.ES_CLUSTER;
+    // // eslint-disable-next-line no-console
+    // console.log('esCluster URL', esHost);
 
     app.listen(process.env.PORT || 4000);
 
