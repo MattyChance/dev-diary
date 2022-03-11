@@ -1,15 +1,15 @@
 import axios from 'axios';
 import 'dotenv/config';
 
-// should i change these  this always returns an internal types
+const esHost = process.env.ES_CLUSTER;
+// eslint-disable-next-line one-var
 export const esRequests = {
-    // eslint-disable-next-line max-len
-    esHost: process.env.ES_CLUSTER,
+
     getOnePost: async (id: string): Promise<any> => {
-        return axios.get(esRequests.esHost + '/post/_doc/' + id);
+        return axios.get(esHost + '/post/_doc/' + id);
     },
     getOneUser: async (id: string): Promise<any> => {
-        const result = await axios.get(esRequests.esHost + '/user/_doc/' + id);
+        const result = await axios.get(esHost + '/user/_doc/' + id);
 
         return result;
     },
@@ -24,14 +24,14 @@ export const esRequests = {
         };
             
         return axios.get(
-            esRequests.esHost + '/post/_search/',
+            esHost + '/post/_search/',
             {data: query, headers: {'Content-Type': 'application/json'}}
         );
     },
     getNumberOfUsers: async (): Promise<number> => {
         // eslint-disable-next-line no-useless-catch
         try {
-            const result = await axios.get(`${esRequests.esHost}/user/_count`);
+            const result = await axios.get(`${esHost}/user/_count`);
             return result.data?.count;
         } catch (e) {
             throw e;
@@ -53,7 +53,7 @@ export const esRequests = {
 
         return axios({
             method: 'post',
-            url: `${esRequests.esHost}/user/_doc/${id}`,
+            url: `${esHost}/user/_doc/${id}`,
             data
         });
     },
@@ -81,7 +81,7 @@ export const esRequests = {
         
         return axios({
             method: 'post',
-            url: `${esRequests.esHost}/post/_doc/${postId}`,
+            url: `${esHost}/post/_doc/${postId}`,
             data
         });
     },
@@ -121,7 +121,7 @@ export const esRequests = {
 
         return axios({
             method: 'post',
-            url: `${esRequests.esHost}/post/_update/${postId}`,
+            url: `${esHost}/post/_update/${postId}`,
             data: {
                 'doc': data
             }
