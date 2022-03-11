@@ -4,7 +4,7 @@ import 'dotenv/config';
 // should i change these  this always returns an internal types
 export const esRequests = {
     // eslint-disable-next-line max-len
-    esHost: process.env.NODE_ENV === 'http://localhost:9200' ? 'localhost' : process.env.ES_CLUSTER,
+    esHost: process.env.NODE_ENV === 'local' ? 'http://localhost:9200' : process.env.ES_CLUSTER,
     getOnePost: async (id: string): Promise<any> => {
         return axios.get(esRequests.esHost + '/post/_doc/' + id);
     },
