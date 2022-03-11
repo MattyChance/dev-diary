@@ -1,10 +1,7 @@
 import axios from 'axios';
-import 'dotenv/config';
 
 const esHost = process.env.ES_CLUSTER;
 
-// eslint-disable-next-line no-console
-console.log('esHost', esHost);
 // eslint-disable-next-line one-var
 export const esRequests = {
 
